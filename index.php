@@ -1,0 +1,102 @@
+<?php
+// Auto-simulation for sensor data (English UI)
+$simulated_water_level = rand(30, 190) / 100; 
+$simulated_rainfall = rand(0, 45) / 10;       
+
+if ($simulated_water_level >= 1.5) {
+    $status = 'danger';
+    $bg_class = 'status-danger';
+    $status_text = 'DANGER: Critical Water Level!';
+    $status_desc = 'Water level exceeds critical threshold. Evacuate immediately!';
+} elseif ($simulated_water_level >= 1.0) {
+    $status = 'caution';
+    $bg_class = 'status-caution';
+    $status_text = 'CAUTION: Rising Water & Rain';
+    $status_desc = 'Water level is increasing. Stay alert and monitor surroundings.';
+} else {
+    $status = 'normal';
+    $bg_class = 'status-normal';
+    $status_text = 'NORMAL: Safe Condition';
+    $status_desc = 'Water level is stable and safe.';
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Flood Monitor - Kg. Bukit Gemuroh</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta http-equiv="refresh" content="10">
+</head>
+<body>
+
+<div class="mobile-container">
+    <!-- Header with Location -->
+    <div class="app-header">
+        <span>📍 Kg. Bukit Gemuroh</span>
+        <span style="font-size: 11px; color: #10b981; background: #ecfdf5; padding: 4px 8px; border-radius: 20px;">● Live IoT</span>
+    </div>
+
+    <div class="app-content">
+        <!-- Status Banner -->
+        <div class="status-banner <?php echo $bg_class; ?>">
+            <h3 style="margin:0 0 6px 0; font-size: 16px;"><?php echo $status_text; ?></h3>
+            <p style="margin:0; font-size: 12px; opacity: 0.9;"><?php echo $status_desc; ?></p>
+        </div>
+
+        <!-- Sensor Grid -->
+        <div class="sensor-grid">
+            <div class="card">
+                <h4>Water Level</h4>
+                <p><?php echo number_format($simulated_water_level, 2); ?> m</p>
+            </div>
+            <div class="card">
+                <h4>Rainfall</h4>
+                <p><?php echo $simulated_rainfall; ?> mm/h</p>
+            </div>
+        </div>
+
+        <!-- Weather API Data Card -->
+        <div class="card" style="margin-bottom: 16px; text-align: left; padding: 16px;">
+            <h4 style="margin-bottom: 8px;">☁️ Weather API Data</h4>
+            <div style="font-size: 13px; color: #334155; display: flex; justify-content: space-between;">
+                <span>Forecast: <strong>Heavy Thunderstorm</strong></span>
+                <span>Temp: <strong>29°C</strong></span>
+            </div>
+        </div>
+
+        <!-- System Connection Status -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 12px; font-size: 12px; color: #475569; text-align: center;">
+            📶 Connection Mode: <strong>WiFi / Cloud Active</strong><br>
+            <span style="font-size: 11px; color: #94a3b8;">LoRa Backup Standby Ready</span>
+        </div>
+
+        <!-- Button to Detailed Readings -->
+        <a href="readings.php" class="btn-primary">View Detailed Readings &rarr;</a>
+    </div>
+
+   <!-- Bottom Navigation Bar dengan Font Awesome -->
+    <div class="bottom-nav">
+        <a href="index.php" class="nav-item active">
+            <span class="icon"><i class="fa-solid fa-house"></i></span>
+            <span>Home</span>
+        </a>
+        <a href="notifications.php" class="nav-item">
+            <span class="icon"><i class="fa-regular fa-bell"></i></span>
+            <span>Alerts</span>
+        </a>
+        <a href="camera.php" class="nav-item">
+            <span class="icon"><i class="fa-solid fa-camera"></i></span>
+            <span>Live Cam</span>
+        </a>
+        <a href="offline.php" class="nav-item">
+            <span class="icon"><i class="fa-solid fa-signal"></i></span>
+            <span>LoRa Mode</span>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>
